@@ -8,11 +8,30 @@
       var dataAtual = new Date();
 
       var anoNascimento = new Date(dataNascimento).getFullYear();
+      var mesNascimento = new Date(dataNascimento).getMonth();
+      var diaNascimento = new Date(dataNascimento).getDate();
+
       var anoAtual = dataAtual.getFullYear();
+      var mesAtual = dataAtual.getMonth();
+      var diaAtual = dataAtual.getDate();
 
-      var idade = anoAtual - anoNascimento;
+      var idadeAnos = anoAtual - anoNascimento;
+      var idadeMeses = mesAtual - mesNascimento;
+      var idadeDias = diaAtual - diaNascimento;
 
-      document.getElementById('idade').textContent = "A idade é: " + idade + " anos";
+      if (idadeMeses < 0 || (idadeMeses === 0 && idadeDias < 0)) {
+        idadeAnos--;
+        idadeMeses = 12 - Math.abs(idadeMeses);
+      }
+
+      if (idadeDias < 0) {
+        var ultimoDiaMesAnterior = new Date(anoAtual, mesAtual, 0).getDate();
+        idadeDias = ultimoDiaMesAnterior - Math.abs(idadeDias);
+      }
+
+      var idadeTexto = "A idade é: " + idadeAnos + " anos, " + idadeMeses + " meses e " + idadeDias + " dias";
+
+      document.getElementById('idade').textContent = idadeTexto;
     }
   </script>
 </head>
