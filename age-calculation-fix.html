@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Timer e Idade</title>
+  <script>
+    function calcularIdade() {
+      var dataNascimento = new Date(2023, 2, 9);
+      var dataAtual = new Date();
+
+      var diferencaTempo = dataAtual.getTime() - dataNascimento.getTime();
+
+      var segundos = Math.floor(diferencaTempo / 1000);
+      var minutos = Math.floor(segundos / 60);
+      var horas = Math.floor(minutos / 60);
+      var dias = Math.floor(horas / 24);
+      var meses = Math.floor(dias / 30.436875); // Média de dias por mês
+      var anos = Math.floor(meses / 12);
+
+      document.getElementById('tempo').textContent = "Tempo decorrido desde a data de nascimento: " + anos + " anos, " + meses + " meses, " + dias + " dias, " + horas + " horas, " + minutos + " minutos, " + segundos + " segundos.";
+    }
+  </script>
+</head>
+<body onload="calcularIdade()">
+  <h1>Timer e Idade</h1>
+  <p id="tempo"></p>
+</body>
+</html>
