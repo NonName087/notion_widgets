@@ -32,9 +32,11 @@
       return number.toString().padStart(2, '0');
     }
 
-    function updateTimer() {
+    function calcularTempoDecorrido() {
+      var dataNascimento = new Date(2023, 2, 9);
       var dataAtual = new Date();
-      var diferencaTempo = dataAtual.getTime() - startTime.getTime();
+
+      var diferencaTempo = dataAtual.getTime() - dataNascimento.getTime();
 
       var segundos = Math.floor(diferencaTempo / 1000) % 60;
       var minutos = Math.floor(diferencaTempo / 1000 / 60) % 60;
@@ -52,19 +54,20 @@
     }
 
     var startTime = new Date();
-    setInterval(updateTimer, 1000);
+    setInterval(calcularTempoDecorrido, 1000);
   </script>
 </head>
 <body>
   <div class="timer-widget">
     <h1>Tempo Decorrido</h1>
     <div class="timer-value">
-      <span id="anos">00</span> anos
-      <span id="meses">00</span> meses
-      <span id="dias">00</span> dias
-      <span id="horas">00</span> horas
-      <span id="minutos">00</span> minutos
-      <span id="segundos">00</span> segundos
+      <span id="dias">0</span> dias
+      <span id="horas">0</span> horas
+      <span id="minutos">0</span> minutos
+      <span id="segundos">0</span> segundos
+    </div>
+    <div class="timer-label">
+      desde 09/03/2023
     </div>
   </div>
 </body>
