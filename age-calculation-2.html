@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Timer Widget</title>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    
+    .timer-widget {
+      background-color: #ffffff;
+      border: 2px solid #cccccc;
+      border-radius: 5px;
+      display: inline-block;
+      padding: 20px;
+    }
+    
+    .timer-value {
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .timer-label {
+      font-size: 16px;
+    }
+  </style>
+  <script>
+    function formatTime(number) {
+      return number.toString().padStart(2, '0');
+    }
+
+    function updateTimer() {
+      var dataAtual = new Date();
+      var diferencaTempo = dataAtual.getTime() - startTime.getTime();
+
+      var segundos = Math.floor(diferencaTempo / 1000) % 60;
+      var minutos = Math.floor(diferencaTempo / 1000 / 60) % 60;
+      var horas = Math.floor(diferencaTempo / 1000 / 60 / 60) % 24;
+      var dias = Math.floor(diferencaTempo / 1000 / 60 / 60 / 24);
+
+      document.getElementById('dias').textContent = formatTime(dias);
+      document.getElementById('horas').textContent = formatTime(horas);
+      document.getElementById('minutos').textContent = formatTime(minutos);
+      document.getElementById('segundos').textContent = formatTime(segundos);
+    }
+
+    var startTime = new Date();
+    setInterval(updateTimer, 1000);
+  </script>
+</head>
+<body>
+  <div class="timer-widget">
+    <h1>Tempo Decorrido</h1>
+    <div class="timer-value">
+      <span id="dias">00</span> dias
+      <span id="horas">00</span> horas
+      <span id="minutos">00</span> minutos
+      <span id="segundos">00</span> segundos
+    </div>
+  </div>
+</body>
+</html>
