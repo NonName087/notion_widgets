@@ -40,11 +40,10 @@
   <script>
     $(function() {
       $("#datepicker").datepicker({
-        //dateFormat: 'dd/mm/yy',
+        dateFormat: 'dd/mm/yy',
         onSelect: function(dateText) {
           var dataNascimento = new Date(dateText);
-          //updateTimer(dataNascimento);
-          startTime = dataNascimento;
+          updateTimer(dataNascimento);
         }
       });
     });
@@ -53,7 +52,7 @@
       return number.toString().padStart(2, '0');
     }
 
-    function updateTimer() {
+    function updateTimer(dataNascimento) {
       var dataAtual = new Date();
       var diferencaTempo = dataAtual.getTime() - dataNascimento.getTime();
 
@@ -71,14 +70,11 @@
       document.getElementById('minutos').textContent = formatTime(minutos);
       document.getElementById('segundos').textContent = formatTime(segundos);
     }
-    
-    //var = startTime = new Date();
-    setInterval(updateTimer, 1000);
   </script>
 </head>
 <body>
   <div class="widget-container">
-    <h1 class="widget-title">Idade e Timer Widget</h1>
+    <h1 class="widget-title">Idade e Timer</h1>
     <div class="timer-value">
       <span id="anos">00</span> anos
       <span id="meses">00</span> meses
