@@ -40,10 +40,11 @@
   <script>
     $(function() {
       $("#datepicker").datepicker({
-        dateFormat: 'dd/mm/yy',
+        //dateFormat: 'dd/mm/yy',
         onSelect: function(dateText) {
           var dataNascimento = new Date(dateText);
-          updateTimer(dataNascimento);
+          //updateTimer(dataNascimento);
+          startTime = dataNascimento;
         }
       });
     });
