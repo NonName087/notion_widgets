@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora de Idade</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #666;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #timer {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+  <script>
+    function startTimer() {
+      var dataNascimento = document.getElementById('dataNascimento').value;
+      var dataNascimentoObj = new Date(dataNascimento);
+
+      var timerInterval = setInterval(function() {
+        var dataAtual = new Date();
+        var timeDiff = Math.abs(dataAtual - dataNascimentoObj);
+        var seconds = Math.floor(timeDiff / 1000);
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+        var days = Math.floor(hours / 24);
+        var months = Math.floor(days / 30.436875); // Average number of days in a month
+        var years = Math.floor(months / 12);
+
+        var remainingSeconds = seconds % 60;
+        var remainingMinutes = minutes % 60;
+
+        var timerText = years + " anos, " + months % 12 + " meses, " + days % 30.436875 + " dias, " + hours % 24 + " horas, " + remainingMinutes + " minutos, " + remainingSeconds + " segundos";
+
+        document.getElementById('timer').textContent = timerText;
+      }, 1000);
+
+      // Clear the interval when the timer reaches the date of birth
+      var clearTimerInterval = setInterval(function() {
+        var dataAtual = new Date();
+        if (dataAtual >= dataNascimentoObj) {
+          clearInterval(timerInterval);
+          clearInterval(clearTimerInterval);
+          document.getElementById('timer').textContent = "Feliz Aniversário!";
+        }
+      }, 1000);
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Idade</h1>
+    <label for="dataNascimento">Data de Nascimento:</label>
+    <input type="date" id="dataNascimento">
+    <button onclick="startTimer()">Iniciar Timer</button>
+    <p id="timer"></p>
+  </div>
+</body>
+</html>
