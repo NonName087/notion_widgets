@@ -55,14 +55,16 @@
     function updateTimer(dataNascimento) {
       var dataAtual = new Date();
 
-      var diffMilissegundos = dataAtual - dataNascimento;
+      var diffMilissegundos = dataAtual.getTime() - dataNascimento.getTime();
       var diffSegundos = Math.floor(diffMilissegundos / 1000);
       var diffMinutos = Math.floor(diffSegundos / 60);
       var diffHoras = Math.floor(diffMinutos / 60);
       var diffDias = Math.floor(diffHoras / 24);
+      var diffMeses = Math.floor(diffDias / 30);
+      var diffAnos = Math.floor(diffMeses / 12);
 
-      var anos = Math.floor(diffDias / 365);
-      var meses = Math.floor((diffDias % 365) / 30);
+      var anos = diffAnos;
+      var meses = diffMeses % 12;
       var dias = diffDias % 30;
       var horas = diffHoras % 24;
       var minutos = diffMinutos % 60;
