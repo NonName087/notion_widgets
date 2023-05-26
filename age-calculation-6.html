@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Timer de Idade</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    
+    label {
+      font-size: 24px;
+    }
+    
+    input[type="date"] {
+      font-size: 18px;
+      padding: 5px;
+    }
+    
+    #timer {
+      font-size: 36px;
+      margin-top: 20px;
+    }
+  </style>
+  <script>
+    function calculateAge() {
+      var birthdate = new Date(document.getElementById("birthdate").value);
+      var now = new Date();
+      
+      var age = now - birthdate;
+      
+      var years = Math.floor(age / (365 * 24 * 60 * 60 * 1000));
+      age -= years * (365 * 24 * 60 * 60 * 1000);
+      
+      var months = Math.floor(age / (30 * 24 * 60 * 60 * 1000));
+      age -= months * (30 * 24 * 60 * 60 * 1000);
+      
+      var days = Math.floor(age / (24 * 60 * 60 * 1000));
+      age -= days * (24 * 60 * 60 * 1000);
+      
+      var hours = Math.floor(age / (60 * 60 * 1000));
+      age -= hours * (60 * 60 * 1000);
+      
+      var minutes = Math.floor(age / (60 * 1000));
+      age -= minutes * (60 * 1000);
+      
+      var seconds = Math.floor(age / 1000);
+      
+      document.getElementById("timer").innerHTML = years + " anos, " + months + " meses, " + days + " dias, " + hours + " horas, " + minutes + " minutos, " + seconds + " segundos.";
+    }
+  </script>
+</head>
+<body>
+  <label for="birthdate">Data de Nascimento:</label>
+  <input type="date" id="birthdate" onchange="calculateAge()">
+
+  <div id="timer"></div>
+</body>
+</html>
