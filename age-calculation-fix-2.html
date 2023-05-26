@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Timer Widget</title>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    
+    .timer-widget {
+      background-color: #ffffff;
+      border: 2px solid #cccccc;
+      border-radius: 5px;
+      display: inline-block;
+      padding: 20px;
+    }
+    
+    .timer-value {
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .timer-label {
+      font-size: 16px;
+    }
+  </style>
+  <script>
+    function calcularTempoDecorrido() {
+      var dataNascimento = new Date(2023, 2, 9);
+      var dataAtual = new Date();
+
+      var diferencaTempo = dataAtual.getTime() - dataNascimento.getTime();
+
+      var segundos = Math.floor(diferencaTempo / 1000) % 60;
+      var minutos = Math.floor(diferencaTempo / 1000 / 60) % 60;
+      var horas = Math.floor(diferencaTempo / 1000 / 60 / 60) % 24;
+      var dias = Math.floor(diferencaTempo / 1000 / 60 / 60 / 24);
+      
+      document.getElementById('dias').textContent = dias;
+      document.getElementById('horas').textContent = horas;
+      document.getElementById('minutos').textContent = minutos;
+      document.getElementById('segundos').textContent = segundos;
+    }
+    
+    setInterval(calcularTempoDecorrido, 1000);
+  </script>
+</head>
+<body>
+  <div class="timer-widget">
+    <h1>Tempo Decorrido</h1>
+    <div class="timer-value">
+      <span id="dias">0</span> dias
+      <span id="horas">0</span> horas
+      <span id="minutos">0</span> minutos
+      <span id="segundos">0</span> segundos
+    </div>
+    <div class="timer-label">
+      desde 09/03/2023
+    </div>
+  </div>
+</body>
+</html>
