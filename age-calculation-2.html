@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Timer Widget</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <style>
     body {
       background-color: #f2f2f2;
@@ -27,7 +28,18 @@
       font-size: 16px;
     }
   </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
+    $(function() {
+      $("#datepicker").datepicker({
+        onSelect: function(dateText) {
+          var selectedDate = new Date(dateText);
+          startTime = selectedDate;
+        }
+      });
+    });
+    
     function formatTime(number) {
       return number.toString().padStart(2, '0');
     }
@@ -40,7 +52,11 @@
       var minutos = Math.floor(diferencaTempo / 1000 / 60) % 60;
       var horas = Math.floor(diferencaTempo / 1000 / 60 / 60) % 24;
       var dias = Math.floor(diferencaTempo / 1000 / 60 / 60 / 24);
+      var meses = Math.floor(diferencaTempo / 1000 / 60 / 60 / 24 / 30.436875); // Média de dias por mês
+      var anos = Math.floor(meses / 12);
 
+      document.getElementById('anos').textContent = formatTime(anos);
+      document.getElementById('meses').textContent = formatTime(meses);
       document.getElementById('dias').textContent = formatTime(dias);
       document.getElementById('horas').textContent = formatTime(horas);
       document.getElementById('minutos').textContent = formatTime(minutos);
@@ -55,11 +71,14 @@
   <div class="timer-widget">
     <h1>Tempo Decorrido</h1>
     <div class="timer-value">
+      <span id="anos">00</span> anos
+      <span id="meses">00</span> meses
       <span id="dias">00</span> dias
       <span id="horas">00</span> horas
       <span id="minutos">00</span> minutos
       <span id="segundos">00</span> segundos
     </div>
+    <input type="text" id="datepicker" placeholder="Selecione a Data de Nascimento">
   </div>
 </body>
 </html>
