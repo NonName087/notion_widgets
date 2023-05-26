@@ -52,35 +52,21 @@
       return number.toString().padStart(2, '0');
     }
 
-    function getMonthDiff(start, end) {
-      var months;
-      months = (end.getFullYear() - start.getFullYear()) * 12;
-      months -= start.getMonth() + 1;
-      months += end.getMonth();
-      return months;
-    }
-
-    function getDayDiff(start, end) {
-      var days;
-      var startYear = start.getFullYear();
-      var endYear = end.getFullYear();
-      var startDate = new Date(startYear, start.getMonth(), start.getDate());
-      var endDate = new Date(endYear, end.getMonth(), end.getDate());
-
-      days = Math.floor((endDate - startDate) / (24 * 60 * 60 * 1000));
-
-      return days;
-    }
-
     function updateTimer(dataNascimento) {
       var dataAtual = new Date();
-      var meses = getMonthDiff(dataNascimento, dataAtual);
-      var dias = getDayDiff(dataNascimento, dataAtual);
-      var horas = dataAtual.getHours();
-      var minutos = dataAtual.getMinutes();
-      var segundos = dataAtual.getSeconds();
-      var anos = Math.floor(meses / 12);
-      meses = meses % 12;
+
+      var diffMilissegundos = dataAtual - dataNascimento;
+      var diffSegundos = Math.floor(diffMilissegundos / 1000);
+      var diffMinutos = Math.floor(diffSegundos / 60);
+      var diffHoras = Math.floor(diffMinutos / 60);
+      var diffDias = Math.floor(diffHoras / 24);
+
+      var anos = Math.floor(diffDias / 365);
+      var meses = Math.floor((diffDias % 365) / 30);
+      var dias = diffDias % 30;
+      var horas = diffHoras % 24;
+      var minutos = diffMinutos % 60;
+      var segundos = diffSegundos % 60;
 
       document.getElementById('anos').textContent = formatTime(anos);
       document.getElementById('meses').textContent = formatTime(meses);
