@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Calculadora de Idade</title>
+  <title>Calculadora de Idade e Timer</title>
   <style>
     body {
       background-color: #ffffff;
@@ -46,6 +46,12 @@
       margin-top: 10px;
     }
 
+    #idade {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
     #timer {
       margin-top: 20px;
       font-size: 18px;
@@ -53,13 +59,42 @@
     }
   </style>
   <script>
-    function startTimer() {
+    function calcularIdade() {
       var dataNascimento = document.getElementById('dataNascimento').value;
-      var dataNascimentoObj = new Date(dataNascimento);
+      var dataAtual = new Date();
 
-      var timerInterval = setInterval(function() {
-        var dataAtual = new Date();
-        var timeDiff = Math.abs(dataAtual - dataNascimentoObj);
+      var anoNascimento = new Date(dataNascimento).getFullYear();
+      var mesNascimento = new Date(dataNascimento).getMonth();
+      var diaNascimento = new Date(dataNascimento).getDate();
+
+      var anoAtual = dataAtual.getFullYear();
+      var mesAtual = dataAtual.getMonth();
+      var diaAtual = dataAtual.getDate();
+
+      var idadeAnos = anoAtual - anoNascimento;
+      var idadeMeses = mesAtual - mesNascimento;
+      var idadeDias = diaAtual - diaNascimento;
+
+      if (idadeMeses < 0 || (idadeMeses === 0 && idadeDias < 0)) {
+        idadeAnos--;
+        idadeMeses = 12 - Math.abs(idadeMeses);
+      }
+
+      if (idadeDias < 0) {
+        var ultimoDiaMesAnterior = new Date(anoAtual, mesAtual, 0).getDate();
+        idadeDias = ultimoDiaMesAnterior - Math.abs(idadeDias);
+      }
+
+      var idadeTexto = "A idade é: " + idadeAnos + " anos, " + idadeMeses + " meses e " + idadeDias + " dias";
+
+      document.getElementById('idade').textContent = idadeTexto;
+    }
+
+    function startTimer() {
+      var startDate = new Date();
+      setInterval(function() {
+        var currentDate = new Date();
+        var timeDiff = Math.abs(currentDate - startDate);
         var seconds = Math.floor(timeDiff / 1000);
         var minutes = Math.floor(seconds / 60);
         var hours = Math.floor(minutes / 60);
@@ -67,31 +102,27 @@
         var months = Math.floor(days / 30.436875); // Average number of days in a month
         var years = Math.floor(months / 12);
 
-        var remainingSeconds = seconds % 60;
-        var remainingMinutes = minutes % 60;
+        seconds %= 60;
+        minutes %= 60;
+        hours %= 24;
+        days %= 30.436875;
+        months %= 12;
 
-        var timerText = years + " anos, " + months % 12 + " meses, " + days % 30.436875 + " dias, " + hours % 24 + " horas, " + remainingMinutes + " minutos, " + remainingSeconds + " segundos";
+        var timerText = years + " anos, " + months + " meses, " + days + " dias, " + hours + " horas, " + minutes + " minutos, " + seconds + " segundos";
 
         document.getElementById('timer').textContent = timerText;
-      }, 1000);
-
-      // Clear the interval when the timer reaches the date of birth
-      var clearTimerInterval = setInterval(function() {
-        var dataAtual = new Date();
-        if (dataAtual >= dataNascimentoObj) {
-          clearInterval(timerInterval);
-          clearInterval(clearTimerInterval);
-          document.getElementById('timer').textContent = "Feliz Aniversário!";
-        }
       }, 1000);
     }
   </script>
 </head>
 <body>
   <div class="container">
-    <h1>Calculadora de Idade</h1>
+    <h1>Calculadora de Idade e Timer</h1>
     <label for="dataNascimento">Data de Nascimento:</label>
     <input type="date" id="dataNascimento">
+    <button onclick="calcularIdade()">Calcular Idade</button>
+    <p id="idade"></p>
+
     <button onclick="startTimer()">Iniciar Timer</button>
     <p id="timer"></p>
   </div>
