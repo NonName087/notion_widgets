@@ -52,23 +52,42 @@
       return number.toString().padStart(2, '0');
     }
 
+    function getMonthDiff(start, end) {
+      var months;
+      months = (end.getFullYear() - start.getFullYear()) * 12;
+      months -= start.getMonth() + 1;
+      months += end.getMonth();
+      return months;
+    }
+
+    function getDayDiff(start, end) {
+      var days;
+      var startYear = start.getFullYear();
+      var endYear = end.getFullYear();
+      var startDate = new Date(startYear, start.getMonth(), start.getDate());
+      var endDate = new Date(endYear, end.getMonth(), end.getDate());
+
+      days = Math.floor((endDate - startDate) / (24 * 60 * 60 * 1000));
+
+      return days;
+    }
+
     function updateTimer(dataNascimento) {
       var dataAtual = new Date();
-      var diferencaTempo = dataNascimento.getTime() - dataAtual.getTime();
-
-      var segundos = Math.floor(diferencaTempo / 1000) % 60;
-      var minutos = Math.floor(diferencaTempo / 1000 / 60) % 60;
-      var horas = Math.floor(diferencaTempo / 1000 / 60 / 60) % 24;
-      var dias = Math.floor(diferencaTempo / 1000 / 60 / 60 / 24);
-      var meses = Math.floor(dias / 30.436875); // Média de dias por mês
+      var meses = getMonthDiff(dataNascimento, dataAtual);
+      var dias = getDayDiff(dataNascimento, dataAtual);
+      var horas = dataAtual.getHours();
+      var minutos = dataAtual.getMinutes();
+      var segundos = dataAtual.getSeconds();
       var anos = Math.floor(meses / 12);
+      meses = meses % 12;
 
-      document.getElementById('anos').textContent = formatTime(Math.abs(anos));
-      document.getElementById('meses').textContent = formatTime(Math.abs(meses % 12));
-      document.getElementById('dias').textContent = formatTime(Math.abs(dias % 30));
-      document.getElementById('horas').textContent = formatTime(Math.abs(horas));
-      document.getElementById('minutos').textContent = formatTime(Math.abs(minutos));
-      document.getElementById('segundos').textContent = formatTime(Math.abs(segundos));
+      document.getElementById('anos').textContent = formatTime(anos);
+      document.getElementById('meses').textContent = formatTime(meses);
+      document.getElementById('dias').textContent = formatTime(dias);
+      document.getElementById('horas').textContent = formatTime(horas);
+      document.getElementById('minutos').textContent = formatTime(minutos);
+      document.getElementById('segundos').textContent = formatTime(segundos);
     }
   </script>
 </head>
