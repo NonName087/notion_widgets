@@ -54,7 +54,7 @@
 
     function updateTimer(dataNascimento) {
       var dataAtual = new Date();
-      var diferencaTempo = dataAtual.getTime() - dataNascimento.getTime();
+      var diferencaTempo = dataNascimento.getTime() - dataAtual.getTime();
 
       var segundos = Math.floor(diferencaTempo / 1000) % 60;
       var minutos = Math.floor(diferencaTempo / 1000 / 60) % 60;
@@ -63,12 +63,12 @@
       var meses = Math.floor(dias / 30.436875); // Média de dias por mês
       var anos = Math.floor(meses / 12);
 
-      document.getElementById('anos').textContent = formatTime(anos);
-      document.getElementById('meses').textContent = formatTime(meses % 12);
-      document.getElementById('dias').textContent = formatTime(dias % 30);
-      document.getElementById('horas').textContent = formatTime(horas);
-      document.getElementById('minutos').textContent = formatTime(minutos);
-      document.getElementById('segundos').textContent = formatTime(segundos);
+      document.getElementById('anos').textContent = formatTime(Math.abs(anos));
+      document.getElementById('meses').textContent = formatTime(Math.abs(meses % 12));
+      document.getElementById('dias').textContent = formatTime(Math.abs(dias % 30));
+      document.getElementById('horas').textContent = formatTime(Math.abs(horas));
+      document.getElementById('minutos').textContent = formatTime(Math.abs(minutos));
+      document.getElementById('segundos').textContent = formatTime(Math.abs(segundos));
     }
   </script>
 </head>
