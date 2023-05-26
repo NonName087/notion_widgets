@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora de Idade</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #666;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #idade {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+  <script>
+    function calcularIdade() {
+      var dataNascimento = document.getElementById('dataNascimento').value;
+      var dataAtual = new Date();
+
+      var anoNascimento = new Date(dataNascimento).getFullYear();
+      var mesNascimento = new Date(dataNascimento).getMonth();
+      var diaNascimento = new Date(dataNascimento).getDate();
+
+      var anoAtual = dataAtual.getFullYear();
+      var mesAtual = dataAtual.getMonth();
+      var diaAtual = dataAtual.getDate();
+
+      var idadeAnos = anoAtual - anoNascimento;
+      var idadeMeses = mesAtual - mesNascimento;
+      var idadeDias = diaAtual - diaNascimento;
+
+      if (idadeMeses < 0 || (idadeMeses === 0 && idadeDias < 0)) {
+        idadeAnos--;
+        idadeMeses = 12 - Math.abs(idadeMeses);
+      }
+
+      if (idadeDias < 0) {
+        var ultimoDiaMesAnterior = new Date(anoAtual, mesAtual, 0).getDate();
+        idadeDias = ultimoDiaMesAnterior - Math.abs(idadeDias);
+      }
+
+      var idadeTexto = "A idade é: " + idadeAnos + " anos, " + idadeMeses + " meses e " + idadeDias + " dias";
+
+      document.getElementById('idade').textContent = idadeTexto;
+    }
+
+    function startTimer() {
+      var startDate = new Date();
+      setInterval(function() {
+        var currentDate = new Date();
+        var timeDiff = Math.abs(currentDate - startDate);
+        var seconds = Math.floor(timeDiff / 1000);
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+        var days = Math.floor(hours / 24);
+        var months = Math.floor(days / 30.436875); // Average number of days in a month
+        var years = Math.floor(months / 12);
+
+        document.getElementById('timer').textContent = years + " anos, " + months % 12 + " meses, " + days % 30.436875 + " dias, " + hours % 24 + " horas";
+      }, 1000);
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Idade</h1>
+    <label for="dataNascimento">Data de Nascimento:</label>
+    <input type="date" id="dataNascimento">
+    <button onclick="calcularIdade()">Calcular Idade</button>
+    <p id="idade"></p>
+
+    <button onclick="startTimer()">Iniciar Timer</button>
+    <p id="timer"></p>
+  </div>
+</body>
+</html>
