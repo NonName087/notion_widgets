@@ -1,68 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Timer Widget</title>
+  <title>Idade e Timer Widget</title>
   <style>
     body {
-      background-color: #f2f2f2;
+      background-color: #ffffff;
       font-family: Arial, sans-serif;
       text-align: center;
     }
-    
-    .timer-widget {
-      background-color: #ffffff;
-      border: 2px solid #cccccc;
-      border-radius: 5px;
-      display: inline-block;
+
+    .widget-container {
+      width: 400px;
+      margin: 0 auto;
       padding: 20px;
+      background-color: #f2f2f2;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
     }
-    
+
+    .widget-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
     .timer-value {
       font-size: 40px;
       font-weight: bold;
       margin-bottom: 10px;
     }
-    
+
     .timer-label {
       font-size: 16px;
     }
   </style>
   <script>
-    function calcularTempoDecorrido() {
-      var dataNascimento = new Date(2023, 2, 9);
-      var dataAtual = new Date();
+    function formatTime(number) {
+      return number.toString().padStart(2, '0');
+    }
 
+    function updateTimer() {
+      var dataNascimento = new Date('03/09/2023');
+      var dataAtual = new Date();
       var diferencaTempo = dataAtual.getTime() - dataNascimento.getTime();
 
       var segundos = Math.floor(diferencaTempo / 1000) % 60;
       var minutos = Math.floor(diferencaTempo / 1000 / 60) % 60;
       var horas = Math.floor(diferencaTempo / 1000 / 60 / 60) % 24;
       var dias = Math.floor(diferencaTempo / 1000 / 60 / 60 / 24);
-      var meses = Math.floor(diferencaTempo / 1000 / 60 / 60 / 24 / 30.436875); // Média de dias por mês
+      var meses = Math.floor(dias / 30.436875); // Média de dias por mês
       var anos = Math.floor(meses / 12);
 
       document.getElementById('anos').textContent = formatTime(anos);
-      document.getElementById('meses').textContent = formatTime(meses);
-      document.getElementById('dias').textContent = formatTime(dias);
+      document.getElementById('meses').textContent = formatTime(meses % 12);
+      document.getElementById('dias').textContent = formatTime(dias % 30);
       document.getElementById('horas').textContent = formatTime(horas);
       document.getElementById('minutos').textContent = formatTime(minutos);
       document.getElementById('segundos').textContent = formatTime(segundos);
     }
-    
-    setInterval(calcularTempoDecorrido, 1000);
+
+    setInterval(updateTimer, 1000);
   </script>
 </head>
 <body>
-  <div class="timer-widget">
-    <h1>Tempo Decorrido</h1>
+  <div class="widget-container">
+    <h1 class="widget-title">Idade e Timer</h1>
     <div class="timer-value">
-      <span id="dias">0</span> dias
-      <span id="horas">0</span> horas
-      <span id="minutos">0</span> minutos
-      <span id="segundos">0</span> segundos
-    </div>
-    <div class="timer-label">
-      Desde 09/03/2023
+      <span id="anos">00</span> anos
+      <span id="meses">00</span> meses
+      <span id="dias">00</span> dias
+      <span id="horas">00</span> horas
+      <span id="minutos">00</span> minutos
+      <span id="segundos">00</span> segundos
     </div>
   </div>
 </body>
