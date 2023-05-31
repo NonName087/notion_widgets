@@ -3,13 +3,53 @@
 <head>
   <title>Gráfico de Desenvolvimento Infantil</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    
+    h1 {
+      text-align: center;
+    }
+    
+    form {
+      margin-bottom: 20px;
+    }
+    
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    #grafico {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 <body>
   <h1>Gráfico de Desenvolvimento Infantil</h1>
   
-  <canvas id="grafico" width="400" height="400"></canvas>
+  <form id="formulario" onsubmit="adicionarDados(); return false;">
+    <label for="peso">Peso (kg):</label>
+    <input type="number" id="peso" required><br><br>
+    
+    <label for="altura">Altura (cm):</label>
+    <input type="number" id="altura" required><br><br>
+    
+    <button type="submit">Adicionar Dados</button>
+  </form>
+  
+  <div class="container">
+    <canvas id="grafico" width="400" height="400"></canvas>
+  </div>
   
   <script>
+    var pesoDados = [];
+    var alturaDados = [];
+    
     var ctx = document.getElementById("grafico").getContext("2d");
     var chart = new Chart(ctx, {
       type: "line",
@@ -18,14 +58,14 @@
         datasets: [
           {
             label: "Peso (kg)",
-            data: [3.5, 5.1, 6.3, 7.2, 7.9, 8.5],
+            data: pesoDados,
             borderColor: "blue",
             backgroundColor: "rgba(0, 0, 255, 0.2)",
             borderWidth: 1
           },
           {
             label: "Altura (cm)",
-            data: [52, 58, 63, 67, 70, 73],
+            data: alturaDados,
             borderColor: "green",
             backgroundColor: "rgba(0, 255, 0, 0.2)",
             borderWidth: 1
@@ -42,6 +82,22 @@
         }
       }
     });
+    
+    function adicionarDados() {
+      var pesoInput = document.getElementById("peso");
+      var alturaInput = document.getElementById("altura");
+      
+      var peso = parseFloat(pesoInput.value);
+      var altura = parseFloat(alturaInput.value);
+      
+      pesoDados.push(peso);
+      alturaDados.push(altura);
+      
+      pesoInput.value = "";
+      alturaInput.value = "";
+      
+      chart.update();
+    }
   </script>
 </body>
 </html>
