@@ -2,51 +2,46 @@
 <html>
 <head>
   <title>Gráfico de Desenvolvimento Infantil</title>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <h1>Gráfico de Desenvolvimento Infantil</h1>
   
-  <form id="formulario" onsubmit="plotarGrafico(); return false;">
-    <label for="dataNascimento">Data de Nascimento:</label>
-    <input type="date" id="dataNascimento" required><br><br>
-    
-    <label for="peso">Peso (em kg):</label>
-    <input type="number" id="peso" required><br><br>
-    
-    <label for="altura">Altura (em cm):</label>
-    <input type="number" id="altura" required><br><br>
-    
-    <label for="sexo">Sexo:</label>
-    <select id="sexo" required>
-      <option value="masculino">Masculino</option>
-      <option value="feminino">Feminino</option>
-    </select><br><br>
-    
-    <button type="submit">Gerar Gráfico</button>
-  </form>
-  
-  <div id="grafico"></div>
+  <canvas id="grafico" width="400" height="400"></canvas>
   
   <script>
-    function plotarGrafico() {
-      var dataNascimento = document.getElementById("dataNascimento").value;
-      var peso = document.getElementById("peso").value;
-      var altura = document.getElementById("altura").value;
-      var sexo = document.getElementById("sexo").value;
-      
-      // Aqui você pode usar as informações coletadas para gerar o gráfico de desenvolvimento infantil
-      // Utilize bibliotecas de gráficos como Plotly ou Chart.js para plotar o gráfico com base nos dados inseridos
-      
-      // Exemplo de uso do Plotly para plotar um gráfico de barras
-      var dados = [
-        {x: ["Peso", "Altura"], y: [peso, altura], type: "bar"}
-      ];
-      
-      var layout = {title: "Gráfico de Desenvolvimento Infantil"};
-      
-      Plotly.newPlot("grafico", dados, layout);
-    }
+    var ctx = document.getElementById("grafico").getContext("2d");
+    var chart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: ["1 mês", "2 meses", "3 meses", "4 meses", "5 meses", "6 meses"],
+        datasets: [
+          {
+            label: "Peso (kg)",
+            data: [3.5, 5.1, 6.3, 7.2, 7.9, 8.5],
+            borderColor: "blue",
+            backgroundColor: "rgba(0, 0, 255, 0.2)",
+            borderWidth: 1
+          },
+          {
+            label: "Altura (cm)",
+            data: [52, 58, 63, 67, 70, 73],
+            borderColor: "green",
+            backgroundColor: "rgba(0, 255, 0, 0.2)",
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
   </script>
 </body>
 </html>
